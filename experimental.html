@@ -31,7 +31,7 @@
         .selector {
             background-color: #FADADD;
             width: 90%;
-            height: 15%;
+            height: 18%;
             position: absolute;
             border: 1px solid black;
             opacity: 40%;
@@ -58,12 +58,92 @@
 		#record {
 			margin-top: 1em;
 		}
+
+		.recordButton {
+			background: #FF6F61;
+			border: 1px solid #FF6F61;
+			border-radius: 6px;
+			box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+			box-sizing: border-box;
+			color: #FFFFFF;
+			cursor: pointer;
+			display: inline-block;
+			font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+			font-size: 2em;
+			font-weight: 800;
+			line-height: 16px;
+			min-height: 40px;
+			outline: 0;
+			padding: 12px 14px;
+			text-align: center;
+			text-rendering: geometricprecision;
+			text-transform: none;
+			user-select: none;
+			-webkit-user-select: none;
+			touch-action: manipulation;
+			vertical-align: middle;
+		}
+
+		.recordButton:hover,
+		.recordButton:active {
+			background-color: initial;
+			background-position: 0 0;
+			color: #FF6F61;
+		}
+
+		.recordButton:active {
+			opacity: .5;
+		}
+
+		
     </style>
 
     <script type="text/javascript">
-        function showSymptoms(id) {
-            console.log(id);
+        
+		
+
+		function showSymptoms(id) {
+			var symptomList = ["symptom1", "symptom2", "symptom3", "symptom4", "symptom5", 
+						   "symptom6", "symptom7", "symptom8", "symptom9", "symptom10", 
+						   "symptom11", "symptom12", "symptom13", "symptom14", "symptom15", 
+						   "symptom16", "symptom17", "symptom18", "symptom19", "symptom20", 
+						   "symptom21", "symptom22", "symptom23", "symptom24", "symptom25", "symptom26"]
+
+			const box1 = document.getElementById("symptomBox1");
+			const box2 = document.getElementById("symptomBox2");
+			const box3 = document.getElementById("symptomBox3");
+			const box4 = document.getElementById("symptomBox4");
+			const box5 = document.getElementById("symptomBox5");
+			const box6 = document.getElementById("symptomBox6");
+
+			const box1label = document.getElementById("box1label");
+			const box2label = document.getElementById("box2label");
+			const box3label = document.getElementById("box3label");
+			const box4label = document.getElementById("box4label");
+			const box5label = document.getElementById("box5label");
+			const box6label = document.getElementById("box6label");
+
+			const form = document.getElementById("symptoms");
+
+            box1.value = symptomList[(id-1)*5+0];
+			box2.value = symptomList[(id-1)*5+1];
+			box3.value = symptomList[(id-1)*5+2];
+			box4.value = symptomList[(id-1)*5+3];
+			box5.value = symptomList[(id-1)*5+4];
+
+			box1label.textContent = symptomList[(id-1)*5+0];
+			box2label.textContent = symptomList[(id-1)*5+1];
+			box3label.textContent = symptomList[(id-1)*5+2];
+			box4label.textContent = symptomList[(id-1)*5+3];
+			box5label.textContent = symptomList[(id-1)*5+4];
+
+			form.style = "display:flexbox";
         }
+
+		function submitForm() {
+			const form = document.getElementById("symptoms");
+			form.style = "display:none"
+		}
     </script>
 </head>
 
@@ -71,17 +151,28 @@
     <div class="main">
 		<div class="container">
 			<div id="sel-1" class="selector" style="top:0%" onClick="showSymptoms(1);"></div>
-			<div id="sel-2" class="selector" style="top:17%" onClick="showSymptoms(2);"></div>
-			<div id="sel-3" class="selector" style="top:34%" onClick="showSymptoms(3);"></div>
-			<div id="sel-4" class="selector" style="top:51%" onClick="showSymptoms(4);"></div>
-			<div id="sel-5" class="selector" style="top:68%" onClick="showSymptoms(5);"></div>
-			<div id="sel-6" class="selector" style="top:85%" onClick="showSymptoms(6);"></div>
+			<div id="sel-2" class="selector" style="top:20%" onClick="showSymptoms(2);"></div>
+			<div id="sel-3" class="selector" style="top:40%" onClick="showSymptoms(3);"></div>
+			<div id="sel-4" class="selector" style="top:60%" onClick="showSymptoms(4);"></div>
+			<div id="sel-5" class="selector" style="top:80%" onClick="showSymptoms(5);"></div>
 		</div>
 		<div id="record">
-			<input type="button" value="Record Symptoms" class="button"></input>
+			<input type="button" value="Record Symptoms" class="recordButton"></input>
 		</div>
 		<div id="symptoms" class="symptomscontainer" style="display:none">
-			Symptoms to choose from go here.
+			<form id="symptomForm">
+				<input type="checkbox" id="symptomBox1" name="symptomBox1" value="symptom1">
+  					<label for="symptom1" id="box1label">symptom1</label><br>
+				<input type="checkbox" id="symptomBox2" name="symptomBox2" value="symptom1">
+  					<label for="symptom1" id="box2label">symptom2</label><br>
+				<input type="checkbox" id="symptomBox3" name="symptomBox3" value="symptom1">
+  					<label for="symptom1" id="box3label">symptom3</label><br>
+				<input type="checkbox" id="symptomBox4" name="symptomBox4" value="symptom1">
+  					<label for="symptom1" id="box4label">symptom4</label><br>
+				<input type="checkbox" id="symptomBox5" name="symptomBox5" value="symptom1">
+  					<label for="symptom1" id="box5label">symptom5</label><br>
+				<input type="button" id="symptomButton" value="Done" onclick="submitForm()"></input>
+			</form>
 		</div>
     </div>
 </body>
