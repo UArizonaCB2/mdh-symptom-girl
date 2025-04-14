@@ -3,15 +3,15 @@
 <head>
     <title>Symptom Girl</title>
     <style type="text/css">
-		.main {
-			position: relative;
-			border: 1px solid black;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			height: 800px;
-		}
+        .main {
+            position: relative;
+            border: 1px solid black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 800px;
+        }
 
         .container {
             width: 40%;
@@ -24,9 +24,9 @@
             position: relative;
         }
 
-		.hide {
-			display: none;
-		}
+        .hide {
+            display: none;
+        }
 
         .selector {
             background-color: #FADADD;
@@ -35,54 +35,100 @@
             position: absolute;
             border: 1px solid black;
             opacity: 40%;
-			left: 5%
+            left: 5%
         }
-		
-		.button {
-			font-size: 2em;
-		}
+        
+        .button {
+            font-size: 2em;
+        }
 
-		.symptomscontainer {
-			background-color: white;
-			display: flex;
-			flex-direction: column;
-			border: 1px solid black;
-			position: absolute;
-			bottom: 0;
-			height: 50%;
-			width: 50%;
-			justify-content: center;
-			align-items: center;
-		}
+        .symptomscontainer {
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid black;
+            position: absolute;
+            bottom: 0;
+            height: 50%;
+            width: 50%;
+            justify-content: center;
+            align-items: center;
+        }
 
-		#record {
-			margin-top: 1em;
-		}
+        #record {
+            margin-top: 1em;
+        }
     </style>
 
     <script type="text/javascript">
-        function showSymptoms(id) {
-            console.log(id);
+        /* TODO: Shorten the symptom names to 3 word max so they fit nicely in the UI. */
+        const symptoms = {
+            "head":["Headache", "Vivid Dreams", "Snoring", "Tiredness/Fatigue", "Nausea", "Vomiting"],
+            "chest":["Heart Palpitations", "Shortness of breath", "Sore Nipples"],
+            "stomach":["Constipation", "Hemorrhoids", "Urinary Frequency"],
+            "hips":["Hip / pelvic pain", "Inc. Vaginal Discharge", "Thrush", "Changes in Libido", "Painful veins in vagina"],
+            "legs":["Restless legs", "Swelling"],
+            "feet":["Sciatica"]
+        };
+
+        /* An array that holds values of all the symptoms that have been recorded. */
+        let symptomsRecord = [];
+
+        function updateSymptom(symValue) {
+            /* Sean -
+                1. This code will be called when ever someone checks / unchecks the symptom checkboxes.
+                2. Depending of if it is an check or uncheck action call the respective add or remove symptom functions.
+            */
+        }
+
+        function addSymptom(symValue) {
+            /* Sean - Implement code to add the symptom value to the symptomRecord arry. */ 
+        }
+
+        function removeSymptom(symValue) {
+            /* Sean - Implement code to remove the symptom value from symptomRecord array. */
+        }
+
+        function saveSymptoms() {
+            /* Sean - When this is called close the symptom popup box and print out the contents of symptomRecord array in the console. */
+        }
+        
+        function showSymptoms(part) {
+            const symHolder = document.getElementById("autofillSyms");
+            const symPopUp = document.getElementById("symptoms");
+            symPopUp.style.display = "block";
+            
+            const currentSyms = symptoms[part];
+            let html = ``;
+            for (const sym of currentSyms){
+                const val = sym.trim().toLowerCase().replaceAll(' ', '_');
+                html += `<div><input type='checkbox' id='symptom' name='${val}' value='${val}'><label for='${val}'>${sym}</label></div>`;
+            }
+            symHolder.innerHTML = html;
         }
     </script>
 </head>
 
 <body>
     <div class="main">
-		<div class="container">
-			<div id="sel-1" class="selector" style="top:0%" onClick="showSymptoms(1);"></div>
-			<div id="sel-2" class="selector" style="top:17%" onClick="showSymptoms(2);"></div>
-			<div id="sel-3" class="selector" style="top:34%" onClick="showSymptoms(3);"></div>
-			<div id="sel-4" class="selector" style="top:51%" onClick="showSymptoms(4);"></div>
-			<div id="sel-5" class="selector" style="top:68%" onClick="showSymptoms(5);"></div>
-			<div id="sel-6" class="selector" style="top:85%" onClick="showSymptoms(6);"></div>
-		</div>
-		<div id="record">
-			<input type="button" value="Record Symptoms" class="button"></input>
-		</div>
-		<div id="symptoms" class="symptomscontainer" style="display:none">
-			Symptoms to choose from go here.
-		</div>
+        <div class="container">
+            <div id="sel-1" class="selector" style="top:0%" onClick="showSymptoms('head');"></div>
+            <div id="sel-2" class="selector" style="top:17%" onClick="showSymptoms('chest');"></div>
+            <div id="sel-3" class="selector" style="top:34%" onClick="showSymptoms('stomach');"></div>
+            <div id="sel-4" class="selector" style="top:51%" onClick="showSymptoms('hips');"></div>
+            <div id="sel-5" class="selector" style="top:68%" onClick="showSymptoms('legs');"></div>
+            <div id="sel-6" class="selector" style="top:85%" onClick="showSymptoms('feet');"></div>
+        </div>
+        <div id="record">
+            <input type="button" value="Record Symptoms" class="button"></input>
+        </div>
+        <!-- Sean - Style this whole pop-up container to look like the mock up we have on XD. -->
+        <div id="symptoms" class="symptomscontainer" style="display: none;">
+            <div id="autofillSyms"></div>
+            <div>
+                <input type="button" value="Done" class="button"></input>
+            </div>
+        </div>
     </div>
 </body>
 </html>
