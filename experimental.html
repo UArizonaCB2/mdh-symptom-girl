@@ -96,54 +96,49 @@
 		}
 
 		
+		
     </style>
 
     <script type="text/javascript">
         
 		
+		
+		activeSymptoms = [];
 
 		function showSymptoms(id) {
-			var symptomList = ["symptom1", "symptom2", "symptom3", "symptom4", "symptom5", 
-						   "symptom6", "symptom7", "symptom8", "symptom9", "symptom10", 
-						   "symptom11", "symptom12", "symptom13", "symptom14", "symptom15", 
-						   "symptom16", "symptom17", "symptom18", "symptom19", "symptom20", 
-						   "symptom21", "symptom22", "symptom23", "symptom24", "symptom25", "symptom26"]
-
-			const box1 = document.getElementById("symptomBox1");
-			const box2 = document.getElementById("symptomBox2");
-			const box3 = document.getElementById("symptomBox3");
-			const box4 = document.getElementById("symptomBox4");
-			const box5 = document.getElementById("symptomBox5");
-			const box6 = document.getElementById("symptomBox6");
-
-			const box1label = document.getElementById("box1label");
-			const box2label = document.getElementById("box2label");
-			const box3label = document.getElementById("box3label");
-			const box4label = document.getElementById("box4label");
-			const box5label = document.getElementById("box5label");
-			const box6label = document.getElementById("box6label");
-
-			const form = document.getElementById("symptoms");
-
-            box1.value = symptomList[(id-1)*5+0];
-			box2.value = symptomList[(id-1)*5+1];
-			box3.value = symptomList[(id-1)*5+2];
-			box4.value = symptomList[(id-1)*5+3];
-			box5.value = symptomList[(id-1)*5+4];
-
-			box1label.textContent = symptomList[(id-1)*5+0];
-			box2label.textContent = symptomList[(id-1)*5+1];
-			box3label.textContent = symptomList[(id-1)*5+2];
-			box4label.textContent = symptomList[(id-1)*5+3];
-			box5label.textContent = symptomList[(id-1)*5+4];
-
+			for (let i = 1; i<=5;i++) {
+				let form = document.getElementById("symptoms"+i);
+				form.style = "display:none";
+			}
+			let form = document.getElementById("symptoms"+id);
 			form.style = "display:flexbox";
         }
 
-		function submitForm() {
-			const form = document.getElementById("symptoms");
-			form.style = "display:none"
+		function submitForm(id) {
+			const formDiv = document.getElementById("symptoms"+id);
+			formDiv.style = "display:none";
 		}
+
+		function record() {
+			const symptomList = ["symptom1", "symptom2", "symptom3", "symptom4", "symptom5", 
+						   "symptom6", "symptom7", "symptom8", "symptom9", "symptom10", 
+						   "symptom11", "symptom12", "symptom13", "symptom14", "symptom15", 
+						   "symptom16", "symptom17", "symptom18", "symptom19", "symptom20", 
+						   "symptom21", "symptom22", "symptom23", "symptom24", "symptom25"];
+			let symptomTracker = new Object();
+			for (let str of symptomList) {
+				symptomTracker[str] = false;
+			}
+			for (let i = 1; i<=5;i++) {
+				let form = document.getElementById("symptomForm" + i);
+				let formData = new FormData(form);
+				for (let [key, value] of formData.entries()) {
+					symptomTracker[value] = true;
+				}
+			}
+			console.log(JSON.stringify(symptomTracker))
+		}
+
     </script>
 </head>
 
@@ -157,21 +152,81 @@
 			<div id="sel-5" class="selector" style="top:80%" onClick="showSymptoms(5);"></div>
 		</div>
 		<div id="record">
-			<input type="button" value="Record Symptoms" class="recordButton"></input>
+			<input type="button" value="Record Symptoms" class="recordButton" onclick="record()"></input>
 		</div>
-		<div id="symptoms" class="symptomscontainer" style="display:none">
-			<form id="symptomForm">
-				<input type="checkbox" id="symptomBox1" name="symptomBox1" value="symptom1">
-  					<label for="symptom1" id="box1label">symptom1</label><br>
-				<input type="checkbox" id="symptomBox2" name="symptomBox2" value="symptom1">
-  					<label for="symptom1" id="box2label">symptom2</label><br>
-				<input type="checkbox" id="symptomBox3" name="symptomBox3" value="symptom1">
-  					<label for="symptom1" id="box3label">symptom3</label><br>
-				<input type="checkbox" id="symptomBox4" name="symptomBox4" value="symptom1">
-  					<label for="symptom1" id="box4label">symptom4</label><br>
-				<input type="checkbox" id="symptomBox5" name="symptomBox5" value="symptom1">
-  					<label for="symptom1" id="box5label">symptom5</label><br>
-				<input type="button" id="symptomButton" value="Done" onclick="submitForm()"></input>
+		<div id="symptoms1" class="symptomscontainer" style="display:none">
+			<form id="symptomForm1">
+				<input class="check" type="checkbox" id="symptomBox1-1" name="symptomBox1" value="symptom1">
+  					<label for="symptom1" id="box1label1">symptom1</label><br>
+				<input class="check" type="checkbox" id="symptomBox2-1" name="symptomBox2" value="symptom2">
+  					<label for="symptom2" id="box2label1">symptom2</label><br>
+				<input class="check" type="checkbox" id="symptomBox3-1" name="symptomBox3" value="symptom3">
+  					<label for="symptom3" id="box3label1">symptom3</label><br>
+				<input class="check" type="checkbox" id="symptomBox4-1" name="symptomBox4" value="symptom4">
+  					<label for="symptom4" id="box4label1">symptom4</label><br>
+				<input class="check" type="checkbox" id="symptomBox5-1" name="symptomBox5" value="symptom5">
+  					<label for="symptom5" id="box5label1">symptom5</label><br>
+				<input type="button" id="symptomButton1" value="Done" onclick="submitForm(1)"></input>
+			</form>
+		</div>
+		<div id="symptoms2" class="symptomscontainer" style="display:none">
+			<form id="symptomForm2">
+				<input class="check" type="checkbox" id="symptomBox1-2" name="symptomBox6" value="symptom6">
+  					<label for="symptom6" id="box1label2">symptom6</label><br>
+				<input class="check" type="checkbox" id="symptomBox2-2" name="symptomBox7" value="symptom7">
+  					<label for="symptom7" id="box2label2">symptom7</label><br>
+				<input class="check" type="checkbox" id="symptomBox3-2" name="symptomBox8" value="symptom8">
+  					<label for="symptom8" id="box3label2">symptom8</label><br>
+				<input class="check" type="checkbox" id="symptomBox4-2" name="symptomBox9" value="symptom9">
+  					<label for="symptom9" id="box4label2">symptom9</label><br>
+				<input class="check" type="checkbox" id="symptomBox5-2" name="symptomBox10" value="symptom10">
+  					<label for="symptom10" id="box5label2">symptom10</label><br>
+				<input type="button" id="symptomButton2" value="Done" onclick="submitForm(2)"></input>
+			</form>
+		</div>
+		<div id="symptoms3" class="symptomscontainer" style="display:none">
+			<form id="symptomForm3">
+				<input class="check" type="checkbox" id="symptomBox1-3" name="symptomBox11" value="symptom11">
+  					<label for="symptom11" id="box1label3">symptom11</label><br>
+				<input class="check" type="checkbox" id="symptomBox2-3" name="symptomBox12" value="symptom12">
+  					<label for="symptom12" id="box2label3">symptom12</label><br>
+				<input class="check" type="checkbox" id="symptomBox3-3" name="symptomBox13" value="symptom13">
+  					<label for="symptom13" id="box3label3">symptom13</label><br>
+				<input class="check" type="checkbox" id="symptomBox4-3" name="symptomBox14" value="symptom14">
+  					<label for="symptom14" id="box4label3">symptom14</label><br>
+				<input class="check" type="checkbox" id="symptomBox5-3" name="symptomBox15" value="symptom15">
+  					<label for="symptom15" id="box5label3">symptom15</label><br>
+				<input type="button" id="symptomButton3" value="Done" onclick="submitForm(3)"></input>
+			</form>
+		</div>
+		<div id="symptoms4" class="symptomscontainer" style="display:none">
+			<form id="symptomForm4">
+				<input class="check" type="checkbox" id="symptomBox1-4" name="symptomBox16" value="symptom16">
+  					<label for="symptom16" id="box1label4">symptom16</label><br>
+				<input class="check" type="checkbox" id="symptomBox2-4" name="symptomBox17" value="symptom17">
+  					<label for="symptom17" id="box2label4">symptom17</label><br>
+				<input class="check" type="checkbox" id="symptomBox3-4" name="symptomBox18" value="symptom18">
+  					<label for="symptom18" id="box3label4">symptom18</label><br>
+				<input class="check" type="checkbox" id="symptomBox4-4" name="symptomBox19" value="symptom19">
+  					<label for="symptom19" id="box4label4">symptom19</label><br>
+				<input class="check" type="checkbox" id="symptomBox5-4" name="symptomBox20" value="symptom20">
+  					<label for="symptom20" id="box5label4">symptom20</label><br>
+				<input type="button" id="symptomButton4" value="Done" onclick="submitForm(4)"></input>
+			</form>
+		</div>
+		<div id="symptoms5" class="symptomscontainer" style="display:none">
+			<form id="symptomForm5">
+				<input class="check" type="checkbox" id="symptomBox1-5" name="symptomBox21" value="symptom21">
+  					<label for="symptom21" id="box1label5">symptom21</label><br>
+				<input class="check" type="checkbox" id="symptomBox2-5" name="symptomBox22" value="symptom22">
+  					<label for="symptom22" id="box2label5">symptom22</label><br>
+				<input class="check" type="checkbox" id="symptomBox3-5" name="symptomBox23" value="symptom23">
+  					<label for="symptom23" id="box3label5">symptom23</label><br>
+				<input class="check" type="checkbox" id="symptomBox4-5" name="symptomBox24" value="symptom24">
+  					<label for="symptom24" id="box4label5">symptom24</label><br>
+				<input class="check" type="checkbox" id="symptomBox5-5" name="symptomBox25" value="symptom25">
+  					<label for="symptom25" id="box5label5">symptom25</label><br>
+				<input type="button" id="symptomButton5" value="Done" onclick="submitForm(5)"></input>
 			</form>
 		</div>
     </div>
