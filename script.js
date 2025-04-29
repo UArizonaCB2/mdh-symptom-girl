@@ -22,6 +22,8 @@ let activeSymptoms = [];
 let currentRegion = "none";
 let scontainerVisible = false;
 
+let symptomsReported = {"timestamp": null, "symptoms": []}
+
 function showSymptoms(id) {
     if (currentRegion != "none") {
         // Don't open a new region if one is already visible
@@ -38,7 +40,12 @@ function showSymptoms(id) {
         for (const spair of region) {
             const val = spair['value'];
             const text = spair['text'];
-            innerHTML += "<div class='symptomrow' onClick=\"symptomclicked('" + val + "');\"><div id='" + val + "' class='checkbox'></div><div class='label'>" + text + "</div></div>"
+            //innerHTML += "<div class='symptomrow' onClick=\"symptomclicked('" + val + "');\"><div id='" + val + "' class='checkbox'></div><div class='label'>" + text + "</div></div>"
+            if (symptomsReported["symptoms"].includes(val)) {
+                innerHTML += "<div class='symptomrow' onClick=\"symptomclicked('" + val + "');\"><div id='" + val + "' class='checkbox-active'></div><div class='label'>" + text + "</div></div>"
+            } else {
+                innerHTML += "<div class='symptomrow' onClick=\"symptomclicked('" + val + "');\"><div id='" + val + "' class='checkbox'></div><div class='label'>" + text + "</div></div>"
+            }
         }
         scontainer.innerHTML = innerHTML;
 
@@ -50,6 +57,8 @@ function submitForm(id) {
 }
 
 function record() {
+    symptomsReported["timestamp"] = Date.now();
+    console.log(JSON.stringify(symptomsReported));
     /* 
      * TODO: MyDataHelps API for finishSurvey() will be called here and the active list of symptom
             values recorded will be sent to the the server as a JSON object.
@@ -64,6 +73,13 @@ function symptomclicked(symptomid) {
     }
     else {
         ele.className = 'checkbox';
+    }
+
+    if (symptomsReported["symptoms"].includes(symptomid)) {
+        symptomsReported["symptoms"].splice(symptomsReported["symptoms"].indexOf(symptomid), 1);
+    } else {
+        symptomsReported["symptoms"].push(symptomid);
+        console.log("Added " + symptomid + " to data");
     }
 
     // TODO: Add logic to add the symptomid to the `activeSymptoms` array if it does not exist. If it does then remove it. 
