@@ -1,233 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="style.css">
     <title>Symptom Girl</title>
-    <style type="text/css">
-		.main {
-			position: relative;
-			border: 1px solid black;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			height: 800px;
-		}
+    <script src="script.js"></script>
 
-        .container {
-            width: 40%;
-            height: 80%;
-            background-image: url("img/avatar1.png");
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            border: 1px solid black;
-            position: relative;
-        }
-
-		.hide {
-			display: none;
-		}
-
-        .selector {
-            background-color: #FADADD;
-            width: 90%;
-            height: 18%;
-            position: absolute;
-            border: 1px solid black;
-            opacity: 40%;
-			left: 5%
-        }
-		
-		.button {
-			font-size: 2em;
-		}
-
-		.symptomscontainer {
-			background-color: white;
-			display: flex;
-			flex-direction: column;
-			border: 1px solid black;
-			position: absolute;
-			bottom: 0;
-			height: 50%;
-			width: 50%;
-			justify-content: center;
-			align-items: center;
-		}
-
-		#record {
-			margin-top: 1em;
-		}
-
-		.recordButton {
-			background: #FF6F61;
-			border: 1px solid #FF6F61;
-			border-radius: 6px;
-			box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
-			box-sizing: border-box;
-			color: #FFFFFF;
-			cursor: pointer;
-			display: inline-block;
-			font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
-			font-size: 2em;
-			font-weight: 800;
-			line-height: 16px;
-			min-height: 40px;
-			outline: 0;
-			padding: 12px 14px;
-			text-align: center;
-			text-rendering: geometricprecision;
-			text-transform: none;
-			user-select: none;
-			-webkit-user-select: none;
-			touch-action: manipulation;
-			vertical-align: middle;
-		}
-
-		.recordButton:hover,
-		.recordButton:active {
-			background-color: initial;
-			background-position: 0 0;
-			color: #FF6F61;
-		}
-
-		.recordButton:active {
-			opacity: .5;
-		}
-
-		
-		
-    </style>
-
-    <script type="text/javascript">
-        
-		
-		
-		activeSymptoms = [];
-
-		function showSymptoms(id) {
-			for (let i = 1; i<=5;i++) {
-				let form = document.getElementById("symptoms"+i);
-				form.style = "display:none";
-			}
-			let form = document.getElementById("symptoms"+id);
-			form.style = "display:flexbox";
-        }
-
-		function submitForm(id) {
-			const formDiv = document.getElementById("symptoms"+id);
-			formDiv.style = "display:none";
-		}
-
-		function record() {
-			const symptomList = ["symptom1", "symptom2", "symptom3", "symptom4", "symptom5", 
-						   "symptom6", "symptom7", "symptom8", "symptom9", "symptom10", 
-						   "symptom11", "symptom12", "symptom13", "symptom14", "symptom15", 
-						   "symptom16", "symptom17", "symptom18", "symptom19", "symptom20", 
-						   "symptom21", "symptom22", "symptom23", "symptom24", "symptom25"];
-			let symptomTracker = new Object();
-			for (let str of symptomList) {
-				symptomTracker[str] = false;
-			}
-			for (let i = 1; i<=5;i++) {
-				let form = document.getElementById("symptomForm" + i);
-				let formData = new FormData(form);
-				for (let [key, value] of formData.entries()) {
-					symptomTracker[value] = true;
-				}
-			}
-			console.log(JSON.stringify(symptomTracker))
-		}
-
-    </script>
 </head>
 
 <body>
     <div class="main">
-		<div class="container">
-			<div id="sel-1" class="selector" style="top:0%" onClick="showSymptoms(1);"></div>
-			<div id="sel-2" class="selector" style="top:20%" onClick="showSymptoms(2);"></div>
-			<div id="sel-3" class="selector" style="top:40%" onClick="showSymptoms(3);"></div>
-			<div id="sel-4" class="selector" style="top:60%" onClick="showSymptoms(4);"></div>
-			<div id="sel-5" class="selector" style="top:80%" onClick="showSymptoms(5);"></div>
+        <div class="container">
+			
+			<!-- NOTE: This is going to change. We are moving to only 4 regions. -->
+            <div id="sel-1" class="selector" style="top:0%" onClick="showSymptoms('region1');"></div>
+            <div id="sel-2" class="selector" style="top:25%" onClick="showSymptoms('region2');"></div>
+            <div id="sel-3" class="selector" style="top:50%" onClick="showSymptoms('region3');"></div>
+            <div id="sel-4" class="selector" style="top:75%" onClick="showSymptoms('region4');"></div>
+        </div>
+        <div id="record">
+            <input type="button" value="Record Symptoms" class="recordButton" onclick="record()"></input>
+        </div>
+        <div id="scontainer" class="symptomscontainer" style="display:none">
+			<!-- The code inside the div is automatically populated when the div is clicked. -->
+            <div class="symptomrow" onClick="symptomclicked('symptom1');">
+                <div id="symptom1" class="checkbox"></div>
+                <div class="label">Symptom 1</div>
+            </div>
+        </div>
+		<div id="disclaimer" style="display:none">
+			Participant Notification for Report of Emergent Symptom(s)
+		Some symptoms during pregnancy may be a sign that you or your baby needs extra attention, even if they seem mild. If you experience any of the following, reach out to your healthcare provider for guidance:
+			<ul><li>Any bleeding</li>
+				<li>Any leaking of water</li>
+				<li>Vision changes</li>
+				<li>Severe headache not going away</li>
+				<li>Baby not moving</li>
+				<li>Contractions that don’t go away with rest</li>
+				<li>Painful contractions</li>
+				<li>Persistent low back pain AND contractions</li>
+				<li>Fever</li></ul>
+		To read more about signs and symptoms to look for in pregnancy, click here. In the case of an emergency, call 911.
+		<input type="button" value="I Understand" id="disclaimerButton"> 
 		</div>
-		<div id="record">
-			<input type="button" value="Record Symptoms" class="recordButton" onclick="record()"></input>
-		</div>
-		<div id="symptoms1" class="symptomscontainer" style="display:none">
-			<form id="symptomForm1">
-				<input class="check" type="checkbox" id="symptomBox1-1" name="symptomBox1" value="symptom1">
-  					<label for="symptom1" id="box1label1">symptom1</label><br>
-				<input class="check" type="checkbox" id="symptomBox2-1" name="symptomBox2" value="symptom2">
-  					<label for="symptom2" id="box2label1">symptom2</label><br>
-				<input class="check" type="checkbox" id="symptomBox3-1" name="symptomBox3" value="symptom3">
-  					<label for="symptom3" id="box3label1">symptom3</label><br>
-				<input class="check" type="checkbox" id="symptomBox4-1" name="symptomBox4" value="symptom4">
-  					<label for="symptom4" id="box4label1">symptom4</label><br>
-				<input class="check" type="checkbox" id="symptomBox5-1" name="symptomBox5" value="symptom5">
-  					<label for="symptom5" id="box5label1">symptom5</label><br>
-				<input type="button" id="symptomButton1" value="Done" onclick="submitForm(1)"></input>
-			</form>
-		</div>
-		<div id="symptoms2" class="symptomscontainer" style="display:none">
-			<form id="symptomForm2">
-				<input class="check" type="checkbox" id="symptomBox1-2" name="symptomBox6" value="symptom6">
-  					<label for="symptom6" id="box1label2">symptom6</label><br>
-				<input class="check" type="checkbox" id="symptomBox2-2" name="symptomBox7" value="symptom7">
-  					<label for="symptom7" id="box2label2">symptom7</label><br>
-				<input class="check" type="checkbox" id="symptomBox3-2" name="symptomBox8" value="symptom8">
-  					<label for="symptom8" id="box3label2">symptom8</label><br>
-				<input class="check" type="checkbox" id="symptomBox4-2" name="symptomBox9" value="symptom9">
-  					<label for="symptom9" id="box4label2">symptom9</label><br>
-				<input class="check" type="checkbox" id="symptomBox5-2" name="symptomBox10" value="symptom10">
-  					<label for="symptom10" id="box5label2">symptom10</label><br>
-				<input type="button" id="symptomButton2" value="Done" onclick="submitForm(2)"></input>
-			</form>
-		</div>
-		<div id="symptoms3" class="symptomscontainer" style="display:none">
-			<form id="symptomForm3">
-				<input class="check" type="checkbox" id="symptomBox1-3" name="symptomBox11" value="symptom11">
-  					<label for="symptom11" id="box1label3">symptom11</label><br>
-				<input class="check" type="checkbox" id="symptomBox2-3" name="symptomBox12" value="symptom12">
-  					<label for="symptom12" id="box2label3">symptom12</label><br>
-				<input class="check" type="checkbox" id="symptomBox3-3" name="symptomBox13" value="symptom13">
-  					<label for="symptom13" id="box3label3">symptom13</label><br>
-				<input class="check" type="checkbox" id="symptomBox4-3" name="symptomBox14" value="symptom14">
-  					<label for="symptom14" id="box4label3">symptom14</label><br>
-				<input class="check" type="checkbox" id="symptomBox5-3" name="symptomBox15" value="symptom15">
-  					<label for="symptom15" id="box5label3">symptom15</label><br>
-				<input type="button" id="symptomButton3" value="Done" onclick="submitForm(3)"></input>
-			</form>
-		</div>
-		<div id="symptoms4" class="symptomscontainer" style="display:none">
-			<form id="symptomForm4">
-				<input class="check" type="checkbox" id="symptomBox1-4" name="symptomBox16" value="symptom16">
-  					<label for="symptom16" id="box1label4">symptom16</label><br>
-				<input class="check" type="checkbox" id="symptomBox2-4" name="symptomBox17" value="symptom17">
-  					<label for="symptom17" id="box2label4">symptom17</label><br>
-				<input class="check" type="checkbox" id="symptomBox3-4" name="symptomBox18" value="symptom18">
-  					<label for="symptom18" id="box3label4">symptom18</label><br>
-				<input class="check" type="checkbox" id="symptomBox4-4" name="symptomBox19" value="symptom19">
-  					<label for="symptom19" id="box4label4">symptom19</label><br>
-				<input class="check" type="checkbox" id="symptomBox5-4" name="symptomBox20" value="symptom20">
-  					<label for="symptom20" id="box5label4">symptom20</label><br>
-				<input type="button" id="symptomButton4" value="Done" onclick="submitForm(4)"></input>
-			</form>
-		</div>
-		<div id="symptoms5" class="symptomscontainer" style="display:none">
-			<form id="symptomForm5">
-				<input class="check" type="checkbox" id="symptomBox1-5" name="symptomBox21" value="symptom21">
-  					<label for="symptom21" id="box1label5">symptom21</label><br>
-				<input class="check" type="checkbox" id="symptomBox2-5" name="symptomBox22" value="symptom22">
-  					<label for="symptom22" id="box2label5">symptom22</label><br>
-				<input class="check" type="checkbox" id="symptomBox3-5" name="symptomBox23" value="symptom23">
-  					<label for="symptom23" id="box3label5">symptom23</label><br>
-				<input class="check" type="checkbox" id="symptomBox4-5" name="symptomBox24" value="symptom24">
-  					<label for="symptom24" id="box4label5">symptom24</label><br>
-				<input class="check" type="checkbox" id="symptomBox5-5" name="symptomBox25" value="symptom25">
-  					<label for="symptom25" id="box5label5">symptom25</label><br>
-				<input type="button" id="symptomButton5" value="Done" onclick="submitForm(5)"></input>
-			</form>
+		<div>
+			<!-- TODO: Add the done button here and style it -->
+			<!-- TODO: When this button is clicked called the `record()` method. -->
 		</div>
     </div>
 </body>

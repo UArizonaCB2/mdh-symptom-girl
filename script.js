@@ -152,3 +152,8 @@ function close(target) {{
 
 // Event listener for closing the symptom selector
 document.addEventListener('click', (event) => {close(event.target)});
+
+//TODO: 
+/*
+Figure out CSS variables
+*/
