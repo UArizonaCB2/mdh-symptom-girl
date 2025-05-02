@@ -8,6 +8,20 @@
   height: 800px;
 }
 
+#disclaimer {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  position: absolute;
+  bottom: 15%;
+  width: 50%;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+  display: none;
+}
+
 .container {
   width: 40%;
   height: 80%;
