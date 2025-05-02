@@ -1,22 +1,118 @@
-.girl {
-    display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
+.main {
+  position: relative;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 800px;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    background-color: #f0f0f0;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.container {
+  width: 40%;
+  height: 80%;
+  background-image: url("img/avatar1.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid black;
+  position: relative;
+}
 
-.iconLeft {
-    top: 100;
-    left: 10;
+.hide {
+  display: none;
+}
+
+.selector {
+  background-color: #FADADD;
+  width: 90%;
+  height: 24%;
+  position: absolute;
+  border: 1px solid black;
+  opacity: 40%;
+  left: 5%
+}
+
+.button {
+  font-size: 2em;
+}
+
+.symptomscontainer {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  position: absolute;
+  bottom: 0;
+  height: 60%;
+  width: 50%;
+  justify-content: center;
+  align-items: center;
+}
+
+#record {
+  margin-top: 1em;
+}
+
+.recordButton {
+  background: #FF6F61;
+  border: 1px solid #FF6F61;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+  font-size: 2em;
+  font-weight: 800;
+  line-height: 16px;
+  min-height: 40px;
+  outline: 0;
+  padding: 12px 14px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+}
+
+.recordButton:hover,
+.recordButton:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: #FF6F61;
+}
+
+.recordButton:active {
+  opacity: .5;
+}
+
+.symptomrow {
+  display: flex;
+  padding: 0.5em 0em 0.5em 0em;
+  border-bottom: 2px solid #F7E7CE;
+}
+
+.symptomrow .checkbox {
+  border: 2px solid #E4BC58;
+  border-radius: 5px;
+  width: 1.5em;
+  height: 1.5em;
+  margin: 0px 10px 0px 0px;
+}
+
+.symptomrow .checkbox-active {
+  border: 2px solid #E4BC58;
+  border-radius: 5px;
+  width: 1.5em;
+  height: 1.5em;
+  margin: 0px 10px 0px 0px;
+  background-color: #F7E7CE;
+}
+
+.symptomrow .label {
+  font-size: 1.5em;
 }
