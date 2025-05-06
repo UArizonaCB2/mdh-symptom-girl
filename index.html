@@ -4,7 +4,7 @@
 	<link rel="stylesheet" href="style.css">
     <title>Symptom Girl</title>
     <script src="script.js"></script>
-
+    <script src="https://cdn.careevolution.com/mydatahelps-js/3.27.0/MyDataHelps.min.js" integrity="sha384-ZScgFoHP023/7PvoBATePV81rorx6/DaZ4Zkl3VtKxP9agUwd5pJdX9udPa80bhV" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -27,21 +27,20 @@
                 <div class="label">Symptom 1</div>
             </div>
         </div>
-		<div id="disclaimer" style="display:none">
-			Participant Notification for Report of Emergent Symptom(s)
-		Some symptoms during pregnancy may be a sign that you or your baby needs extra attention, even if they seem mild. If you experience any of the following, reach out to your healthcare provider for guidance:
-			<ul><li>Any bleeding</li>
-				<li>Any leaking of water</li>
-				<li>Vision changes</li>
-				<li>Severe headache not going away</li>
-				<li>Baby not moving</li>
-				<li>Contractions that don’t go away with rest</li>
-				<li>Painful contractions</li>
-				<li>Persistent low back pain AND contractions</li>
-				<li>Fever</li></ul>
-		To read more about signs and symptoms to look for in pregnancy, click here. In the case of an emergency, call 911.
-		<input type="button" value="I Understand" id="disclaimerButton"> 
-		</div>
+		<div id="disclaimer">
+				Participant Notification for Report of Emergent Symptom(s)
+				Some symptoms during pregnancy may be a sign that you or your baby needs extra attention, even if they seem mild. If you experience any of the following, reach out to your healthcare provider for guidance:
+				<ul><li>Any bleeding</li>
+					<li>Any leaking of water</li>
+					<li>Vision changes</li>
+					<li>Severe headache not going away</li>
+					<li>Baby not moving</li>
+					<li>Contractions that don’t go away with rest</li>
+					<li>Painful contractions</li>
+					<li>Persistent low back pain AND contractions</li>
+					<li>Fever</li></ul>
+			To read more about signs and symptoms to look for in pregnancy, click here. In the case of an emergency, call 911.
+			<input type="button" value="I Understand" id="disclaimerButton" onclick="hideDisclaimer()"> 
 		<div>
 			<!-- TODO: Add the done button here and style it -->
 			<!-- TODO: When this button is clicked called the `record()` method. -->

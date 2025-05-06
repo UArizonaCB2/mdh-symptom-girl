@@ -49,6 +49,7 @@ let currentRegion = "none";
 let scontainerVisible = false;
 let openedFromRecord = false;
 let anythingClicked = false;
+let criticalSwitch = false;
 
 let symptomsReported = {"timestamp": null, "symptoms": []}
 
@@ -63,9 +64,10 @@ function showSymptoms(id) {
         currentRegion = id;
         console.log(currentRegion);
 
+
+        const temp = document.getElementById('disclaimer');
         if (!(id in symptomMap)) {
             // Simulate closing by clicking on something random
-            const temp = document.getElementById('record');
             close(temp);
             record();
             return
@@ -77,6 +79,8 @@ function showSymptoms(id) {
         for (const spair of region) {
             const val = spair['value'];
             const text = spair['text'];
+            const crit = spair['critical'];
+           
             //innerHTML += "<div class='symptomrow' onClick=\"symptomclicked('" + val + "');\"><div id='" + val + "' class='checkbox'></div><div class='label'>" + text + "</div></div>"
             if (symptomsReported["symptoms"].includes(val)) {
                 innerHTML += "<div class='symptomrow' onClick=\"symptomclicked('" + val + "');\"><div id='" + val + "' class='checkbox-active'></div><div class='label'>" + text + "</div></div>"
@@ -87,6 +91,8 @@ function showSymptoms(id) {
         // Add in appropriate buttons
         if (openedFromRecord) {
             innerHTML += "<div id=\"next\"><input type=\"button\" value=\"Next\" class=\"nextButton\" onclick=\"closeAndOpenNext('" + id + "')\"></input></div>"
+        } else {
+            innerHTML += "<div id=\"next\"><input type=\"button\" value=\"Save\" class=\"saveButton\" onclick=\"closeId('disclaimer')\"></input></div>"
         }
         scontainer.innerHTML = innerHTML;
 
@@ -100,19 +106,36 @@ function closeAndOpenNext(id) {
 function submitForm(id) {
     const formDiv = document.getElementById("symptoms" + id);
     formDiv.style = "display:none";
+    if (criticalSwitch) {
+        showDisclaimer();
+        criticalSwitch = false;
+    }
 }
 
 function record() {
     if (!anythingClicked) {
         openedFromRecord = true;
         showSymptoms("region1");
+    } else {
+        openedFromRecord = false;
+        symptomsReported["timestamp"] = Date.now();
+        console.log(JSON.stringify(symptomsReported));
+
     }
-    symptomsReported["timestamp"] = Date.now();
-    console.log(JSON.stringify(symptomsReported));
     /* 
      * TODO: MyDataHelps API for finishSurvey() will be called here and the active list of symptom
             values recorded will be sent to the the server as a JSON object.
      */
+}
+
+function showDisclaimer() {
+    let disclaimer = document.getElementById("disclaimer");
+    disclaimer.style = "display:flex";
+}
+
+function hideDisclaimer() {
+    let disclaimer = document.getElementById("disclaimer");
+    disclaimer.style = "display:none";
 }
 
 function symptomclicked(symptomid) {
@@ -135,7 +158,7 @@ function symptomclicked(symptomid) {
     // TODO: Add logic to add the symptomid to the `activeSymptoms` array if it does not exist. If it does then remove it. 
 }
 
-function close(target) {{
+function close(target) {
     const area = document.getElementById('scontainer');
 
     if (scontainerVisible) {
@@ -148,7 +171,23 @@ function close(target) {{
         currentRegion = "none";
         scontainer.style = "display:none";
     }
-}}
+}
+
+function closeId(id) {
+    const target = document.getElementById(id);
+    const area = document.getElementById('scontainer');
+
+    if (scontainerVisible) {
+        // Reset for next click
+        scontainerVisible = false;
+        return; 
+    }
+
+    if (!area.contains(target) && currentRegion != "none") {
+        currentRegion = "none";
+        scontainer.style = "display:none";
+    }
+}
 
 // Event listener for closing the symptom selector
 document.addEventListener('click', (event) => {close(event.target)});
