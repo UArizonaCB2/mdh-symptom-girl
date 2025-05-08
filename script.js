@@ -54,7 +54,6 @@ let criticalSwitch = false;
 let symptomsReported = {"timestamp": null, "symptoms": []}
 
 function showSymptoms(id) {
-    console.log(id)
     if (currentRegion != "none") {
         // Don't open a new region if one is already visible
         return;
@@ -69,8 +68,8 @@ function showSymptoms(id) {
         if (!(id in symptomMap)) {
             // Simulate closing by clicking on something random
             close(temp);
-            record();
-            return
+            openedFromRecord = false;
+            return;
         }
         const region = symptomMap[id];
         const holder = document.getElementById('scontainer');
@@ -90,15 +89,16 @@ function showSymptoms(id) {
         }
         // Add in appropriate buttons
         if (openedFromRecord) {
-            innerHTML += "<div id=\"next\"><input type=\"button\" value=\"Next\" class=\"nextButton\" onclick=\"closeAndOpenNext('" + id + "')\"></input></div>"
+            innerHTML += "<div id=\"next\"><input type=\"button\" value=\"Next\" class=\"recordButton\" onclick=\"closeAndOpenNext('" + id + "')\"></input></div>"
         } else {
-            innerHTML += "<div id=\"next\"><input type=\"button\" value=\"Save\" class=\"saveButton\" onclick=\"closeId('disclaimer')\"></input></div>"
+            innerHTML += "<div id=\"save\"><input type=\"button\" value=\"Save\" class=\"recordButton\" onclick=\"closeId('disclaimer')\"></input></div>"
         }
         scontainer.innerHTML = innerHTML;
 
 }
 
 function closeAndOpenNext(id) {
+    save();
     close(document.getElementById('record'));
     showSymptoms('region' + (parseInt(id.charAt(id.length - 1))+1));
 }
@@ -106,31 +106,30 @@ function closeAndOpenNext(id) {
 function submitForm(id) {
     const formDiv = document.getElementById("symptoms" + id);
     formDiv.style = "display:none";
-    if (criticalSwitch) {
-        showDisclaimer();
-        criticalSwitch = false;
-    }
 }
 
 function record() {
-    if (!anythingClicked) {
-        openedFromRecord = true;
-        showSymptoms("region1");
-    } else {
-        openedFromRecord = false;
-        symptomsReported["timestamp"] = Date.now();
-        console.log(JSON.stringify(symptomsReported));
+    openedFromRecord = true;
+    showSymptoms("region1");
+}
 
+function save() {
+    // TODO: Implement API calls
+    symptomsReported["timestamp"] = Date.now();
+    if (symptomsReported.symptoms.length != 0) {
+        console.log(JSON.stringify(symptomsReported)); // Replace this line with API call
     }
-    /* 
-     * TODO: MyDataHelps API for finishSurvey() will be called here and the active list of symptom
-            values recorded will be sent to the the server as a JSON object.
-     */
+    symptomsReported['symptoms'] = [];
+    showDisclaimer();
 }
 
 function showDisclaimer() {
-    let disclaimer = document.getElementById("disclaimer");
-    disclaimer.style = "display:flex";
+    if (criticalSwitch) {
+        let disclaimer = document.getElementById("disclaimer");
+        disclaimer.style = "display:flex";
+        criticalSwitch = false;
+        return;
+    }        
 }
 
 function hideDisclaimer() {
@@ -143,6 +142,14 @@ function symptomclicked(symptomid) {
     // Toggle the checked state of the fake checkbox.
     if (ele.className == 'checkbox') {
         ele.className = 'checkbox-active';
+
+        for (const spair of symptomMap[currentRegion]) {
+            if (spair['value'] == symptomid && spair['critical'] == 'yes') {
+                criticalSwitch = true;
+                console.log("crit switch  = true");
+            }
+        }
+        
     }
     else {
         ele.className = 'checkbox';
@@ -150,6 +157,7 @@ function symptomclicked(symptomid) {
 
     if (symptomsReported["symptoms"].includes(symptomid)) {
         symptomsReported["symptoms"].splice(symptomsReported["symptoms"].indexOf(symptomid), 1);
+        
     } else {
         symptomsReported["symptoms"].push(symptomid);
         console.log("Added " + symptomid + " to data");
@@ -158,39 +166,42 @@ function symptomclicked(symptomid) {
     // TODO: Add logic to add the symptomid to the `activeSymptoms` array if it does not exist. If it does then remove it. 
 }
 
+
 function close(target) {
     const area = document.getElementById('scontainer');
-
+/*
     if (scontainerVisible) {
         // Reset for next click
         scontainerVisible = false;
         return; 
-    }
+    }*/
 
     if (!area.contains(target) && currentRegion != "none") {
         currentRegion = "none";
         scontainer.style = "display:none";
+        save()
     }
 }
 
 function closeId(id) {
     const target = document.getElementById(id);
     const area = document.getElementById('scontainer');
-
+/*
     if (scontainerVisible) {
         // Reset for next click
         scontainerVisible = false;
         return; 
-    }
+    }*/
 
     if (!area.contains(target) && currentRegion != "none") {
         currentRegion = "none";
         scontainer.style = "display:none";
+        save()
     }
 }
 
 // Event listener for closing the symptom selector
-document.addEventListener('click', (event) => {close(event.target)});
+// document.addEventListener('click', (event) => {close(event.target)});
 
 //TODO: 
 /*
