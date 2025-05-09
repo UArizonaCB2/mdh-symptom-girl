@@ -50,11 +50,12 @@ let scontainerVisible = false;
 let openedFromRecord = false;
 let anythingClicked = false;
 let criticalSwitch = false;
+let disclaimerShown = false;
 
 let symptomsReported = {"timestamp": null, "symptoms": []}
 
 function showSymptoms(id) {
-    if (currentRegion != "none") {
+    if (currentRegion != "none" || disclaimerShown) {
         // Don't open a new region if one is already visible
         return;
     }    
@@ -69,6 +70,7 @@ function showSymptoms(id) {
             // Simulate closing by clicking on something random
             close(temp);
             openedFromRecord = false;
+            showDisclaimer();
             return;
         }
         const region = symptomMap[id];
@@ -89,7 +91,11 @@ function showSymptoms(id) {
         }
         // Add in appropriate buttons
         if (openedFromRecord) {
-            innerHTML += "<div id=\"next\"><input type=\"button\" value=\"Next\" class=\"recordButton\" onclick=\"closeAndOpenNext('" + id + "')\"></input></div>"
+            if (id == "region4") {
+                innerHTML += "<div id=\"next\"><input type=\"button\" value=\"Save\" class=\"recordButton\" onclick=\"closeAndOpenNext('" + id + "')\"></input></div>"
+            } else {
+                innerHTML += "<div id=\"next\"><input type=\"button\" value=\"Next\" class=\"recordButton\" onclick=\"closeAndOpenNext('" + id + "')\"></input></div>"
+            }
         } else {
             innerHTML += "<div id=\"save\"><input type=\"button\" value=\"Save\" class=\"recordButton\" onclick=\"closeId('disclaimer')\"></input></div>"
         }
@@ -120,7 +126,7 @@ function save() {
         console.log(JSON.stringify(symptomsReported)); // Replace this line with API call
     }
     symptomsReported['symptoms'] = [];
-    showDisclaimer();
+    if (!openedFromRecord) showDisclaimer();
 }
 
 function showDisclaimer() {
@@ -128,6 +134,7 @@ function showDisclaimer() {
         let disclaimer = document.getElementById("disclaimer");
         disclaimer.style = "display:flex";
         criticalSwitch = false;
+        disclaimerShown = true;
         return;
     }        
 }
@@ -135,6 +142,7 @@ function showDisclaimer() {
 function hideDisclaimer() {
     let disclaimer = document.getElementById("disclaimer");
     disclaimer.style = "display:none";
+    disclaimerShown = false;
 }
 
 function symptomclicked(symptomid) {

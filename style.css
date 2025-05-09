@@ -8,15 +8,27 @@
 }
 
 #disclaimer {
-  background-color: white;
+  background-color: rgb(218, 164, 164);
   position: absolute;
-  bottom: 15%;
+  bottom: 30%;
   width: 50%;
   justify-content: center;
   align-items: center;
   font-size: 1.5em;
   display: none;
   flex-direction: column;
+  border-radius: 1em;
+  padding: 1em 1em;
+  opacity: 95%;
+  border:black;
+  border-width: 0.1em;
+  border-style: solid;
+}
+
+#disclaimerButton {
+  width: 60%;
+  font-size: 1em;
+  margin-top: 2em;
 }
 
 .container {
