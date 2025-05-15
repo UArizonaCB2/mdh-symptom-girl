@@ -9,16 +9,18 @@
 
 <body>
     <div class="main">
+        <!-- Check mark indicating that we have saved the results. -->
+        <div class="checkmark">
+
+        </div>
         <div class="container">
-			
-			<!-- NOTE: This is going to change. We are moving to only 4 regions. -->
             <div id="sel-1" class="selector" style="top:0%" onClick="showSymptoms('region1');"></div>
             <div id="sel-2" class="selector" style="top:25%" onClick="showSymptoms('region2');"></div>
             <div id="sel-3" class="selector" style="top:50%" onClick="showSymptoms('region3');"></div>
             <div id="sel-4" class="selector" style="top:75%" onClick="showSymptoms('region4');"></div>
         </div>
         <div id="record">
-            <input type="button" value="Show All Symptoms" class="recordButton" onclick="record()"></input>
+            <input type="button" value="Show All Symptoms" class="recordButton" onclick="showAllSymptoms();"></input>
         </div>
         <div id="scontainer" class="symptomscontainer" style="display:none">
 			<!-- The code inside the div is automatically populated when the div is clicked. -->
@@ -27,20 +29,25 @@
                 <div class="label">Symptom 1</div>
             </div>
         </div>
-		<div id="disclaimer">
-				Participant Notification for Report of Emergent Symptom(s)
-				Some symptoms during pregnancy may be a sign that you or your baby needs extra attention, even if they seem mild. If you experience any of the following, reach out to your healthcare provider for guidance:
+		<div id="disclaimer" class="disclaimer">
+            <div style="display: flex; width: 100%; justify-content: center; align-items: center;   ">
+                <img src=img/exclamation.svg width="50px" height="50px">
+            </div>
+            <div>
+				<p>Some symptoms during pregnancy may be a sign that you or your baby needs extra attention, even if they seem mild. If you experience any of the following, reach out to your healthcare provider for guidance:</p>
 				<ul><li>Any bleeding</li>
 					<li>Any leaking of water</li>
 					<li>Vision changes</li>
 					<li>Severe headache not going away</li>
 					<li>Baby not moving</li>
-					<li>Contractions that don’t go away with rest</li>
+					<li>Contractions that don't go away with rest</li>
 					<li>Painful contractions</li>
 					<li>Persistent low back pain AND contractions</li>
 					<li>Fever</li></ul>
-			To read more about signs and symptoms to look for in pregnancy, click here. In the case of an emergency, call 911.
-			<input type="button" value="I Understand" id="disclaimerButton" onclick="hideDisclaimer()"> 
+			    <p>To read more about signs and symptoms to look for in pregnancy, click here.</p>
+                <p>In the case of an emergency, call 911.</p>
+			    <input type="button" class="recordButton" style="font-size: 1.5em;" value="I Understand" id="disclaimerButton" onclick="hideDisclaimer()">
+            </div>
 		<div>
 			<!-- TODO: Add the done button here and style it -->
 			<!-- TODO: When this button is clicked called the `record()` method. -->
