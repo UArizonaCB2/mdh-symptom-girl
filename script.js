@@ -68,6 +68,9 @@ function showSymptoms(id) {
         return
     }
 
+    // Go ahead and hide all the visual overlays so the user knows she cannot click outside.
+    hideSeletors();
+
     currentRegion = id;
 
     const region = symptomMap[id];
@@ -151,6 +154,8 @@ function showCheckmark() {
     checkmark.addEventListener("animationend", ()=>{
         checkmark.style.display = "none";
         checkmark.classList.remove("fade-out");
+        // Make to show all the selector overlays again.
+        showSelectors();
     })
 }
 
@@ -159,6 +164,20 @@ function vibrate(duration) {
     if (navigator.vibrate) {
         navigator.vibrate(duration);
     }
+}
+
+// Method which hides all the overlays.
+function hideSeletors() {
+    const selector_container = document.getElementById("selector-container");
+    selector_container.classList.remove("fade-in");
+    selector_container.classList.add("fade-out");
+}
+
+// Method which makes all the seletor overlays appear again.
+function showSelectors() {
+    const selector_container = document.getElementById("selector-container");
+    selector_container.classList.remove("fade-out");
+    selector_container.classList.add("fade-in");
 }
 
 function showDisclaimer() {
