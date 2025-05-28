@@ -164,6 +164,14 @@ function save() {
     resetStates();
 }
 
+// Safely convert to Integer.
+function safeIntConvert(strval, def=0) {
+    const intval = parseInt(strval);
+    if (Number.isNaN(intval))
+        return def;
+    return intval;
+}
+
 function showCheckmark() {
     // Show the checkmark for the user
     const checkmark = document.getElementById("checkmark");
