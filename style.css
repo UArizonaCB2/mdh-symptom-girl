@@ -7,6 +7,25 @@
   height: 1440px;
 }
 
+.checkmark {
+  position: absolute;
+  top:40%;
+  z-index: 10;
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.fade-out {
+  animation: fade-out 0.5s linear forwards;
+}
+
 .disclaimer {
   background-color: white;
   border: 2px solid #E4BC58;

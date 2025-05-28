@@ -106,6 +106,11 @@ function save() {
     // TODO: Implement API calls
     symptomsReported["timestamp"] = Date.now();
 
+    // Don't show the checkmark from here if we have to show the disclaimer.
+    if(!criticalSwitch) {
+        showCheckmark();
+    }
+    // Show the disclaimer if a critical symptom has been recorded.
     showDisclaimer();
 
     // We will decouple all the symptoms stores in the array, and then call the API one at a time to add them.
@@ -136,6 +141,26 @@ function save() {
     resetStates();
 }
 
+function showCheckmark() {
+    // Show the checkmark for the user
+    const checkmark = document.getElementById("checkmark");
+    checkmark.style.display = "inline";
+    checkmark.classList.add("fade-out");
+    // Perform haptic vibration to let the user know we are done.
+    vibrate(500);
+    checkmark.addEventListener("animationend", ()=>{
+        checkmark.style.display = "none";
+        checkmark.classList.remove("fade-out");
+    })
+}
+
+// Function which performs vibration for a given amount of duration(ms)
+function vibrate(duration) {
+    if (navigator.vibrate) {
+        navigator.vibrate(duration);
+    }
+}
+
 function showDisclaimer() {
     if (criticalSwitch) {
         let disclaimer = document.getElementById("disclaimer");
@@ -148,6 +173,8 @@ function hideDisclaimer() {
     let disclaimer = document.getElementById("disclaimer");
     disclaimer.style = "display:none";
     disclaimerShown = false;
+
+    showCheckmark();
 }
 
 function symptomclicked(symptomid) {
