@@ -140,6 +140,26 @@ function save() {
         //TODO: Show an error asking the user to try again.
     })
 
+    // Call MDH API to update the custom fields for symptom counts.
+    MyDataHelps.getParticipantInfo().then(
+    (result)=>{
+        const customFields = result.customFields;
+        let daily_symptoms = safeIntConvert(customFields.daily_symptom_count);
+        let weekly_symptoms = safeIntConvert(customFields.weekly_symptom_count);
+        let total_symptoms = safeIntConvert(customFields.total_symptom_count);
+
+        const symptomCount = symptomsReported["symptoms"].length;
+        daily_symptoms += symptomCount;
+        weekly_symptoms += symptomCount;
+        total_symptoms += symptomCount;
+
+        MyDataHelps.persistParticipantInfo({},
+                                           {'daily_symptom_count':daily_symptoms.toString(),
+                                            'weekly_symptom_count':weekly_symptoms.toString(),
+                                            'total_symptom_count':total_symptoms.toString(),
+                                           });
+    })
+
     // Reset all states back to their starting states.
     resetStates();
 }
