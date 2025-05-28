@@ -213,3 +213,7 @@ function closeAndSave(id) {
     // Save the symptoms.
     save();
 }
+
+window.addEventListener("load", ()=>{
+    document.getElementById("main").style.height = window.innerHeight.toString()+"px";
+})
