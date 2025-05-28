@@ -1,3 +1,21 @@
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in-selector {
+ 0% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 0.4;
+ }
+}
+
 .main {
   position: relative;
   display: flex;
@@ -11,15 +29,6 @@
   position: absolute;
   top:40%;
   z-index: 10;
-}
-
-@keyframes fade-out {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
 }
 
 .fade-out {
@@ -60,8 +69,9 @@
   width: 90%;
   height: 24%;
   position: absolute;
-  opacity: 40%;
-  left: 5%
+  opacity: 0.4;
+  left: 5%;
+  animation: fade-in-selector 1s linear forwards;
 }
 
 .button {
