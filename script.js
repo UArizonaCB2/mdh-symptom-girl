@@ -153,8 +153,8 @@ function save() {
         weekly_symptoms += symptomCount;
         total_symptoms += symptomCount;
 
-        console.log("Symptom Count - "+symptomCount);
         console.log("Updating symptom counts in custom fields");
+        console.log(deviceItems);
         MyDataHelps.persistParticipantInfo({},
                                            {'daily_symptom_count':daily_symptoms.toString(),
                                             'weekly_symptom_count':weekly_symptoms.toString(),
