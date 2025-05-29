@@ -153,12 +153,16 @@ function save() {
         weekly_symptoms += symptomCount;
         total_symptoms += symptomCount;
 
+        console.log("Symptom Count - "+symptomCount);
+        console.log("Updating symptom counts in custom fields");
         MyDataHelps.persistParticipantInfo({},
                                            {'daily_symptom_count':daily_symptoms.toString(),
                                             'weekly_symptom_count':weekly_symptoms.toString(),
                                             'total_symptom_count':total_symptoms.toString(),
+                                           }).then(()=>{
+                                               console.log("Custom fields have been updated");
                                            });
-    })
+    });
 
     // Reset all states back to their starting states.
     resetStates();
