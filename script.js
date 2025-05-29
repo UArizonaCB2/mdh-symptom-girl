@@ -148,13 +148,12 @@ function save() {
         let weekly_symptoms = safeIntConvert(customFields.weekly_symptom_count);
         let total_symptoms = safeIntConvert(customFields.total_symptom_count);
 
-        const symptomCount = symptomsReported["symptoms"].length;
+        const symptomCount = deviceItems.length;
         daily_symptoms += symptomCount;
         weekly_symptoms += symptomCount;
         total_symptoms += symptomCount;
 
         console.log("Updating symptom counts in custom fields");
-        console.log(deviceItems);
         MyDataHelps.persistParticipantInfo({},
                                            {'daily_symptom_count':daily_symptoms.toString(),
                                             'weekly_symptom_count':weekly_symptoms.toString(),
