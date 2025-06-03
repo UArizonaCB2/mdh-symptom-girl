@@ -25,7 +25,7 @@ const symptomMap = {
         { "value": "hip_pelvic_vaginal_pain", "text": "Hip/Pelvic/Vaginal Pain"},
         { "value": "vaginal_discharge", "text": "Vaginal Discharge/Itching"},
         { "value": "constipation", "text": "Constipation"},
-        { "value": "urinary_frequency", "text": "Unirary Frequency"},
+        { "value": "urinary_frequency", "text": "Urinary Frequency"},
         { "value": "bleeding_spotting", "text": "Bleeding/Spotting", "critical": "yes"},
         { "value": "leaking_fluid", "text": "Leaking Fluid", "critical": "yes"},
         { "value": "change_in_sex_drive", "text": "Change in Sex Drive"},
