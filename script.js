@@ -110,6 +110,8 @@ function showAllSymptoms() {
 
 // Method which saves the response that no symptom has been recorded.
 function recordNoSymptoms() {
+    document.getElementById("thankyou").style.display="none";
+    document.getElementById("gotit").style.display="inline";
     symptomsReported["symptoms"].push("no_symptom");
     save();
 }
@@ -196,6 +198,9 @@ function showCheckmark() {
         checkmark.classList.remove("fade-out-fireworks");
         // Make to show all the selector overlays again.
         showSelectors();
+        // Also make sure to return the thank you text back to normal
+        document.getElementById("gotit").style.display="none";
+        document.getElementById("thankyou").style.display="inline";
     })
 }
 
