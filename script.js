@@ -38,7 +38,10 @@ const symptomMap = {
         { "value": "back_pain", "text": "Back Pain"},
         { "value": "leg_cramps", "text": "Leg Cramps"},
         { "value": "sciatica", "text": "Sciatica"},
-    ]
+    ],
+    "region5": [
+        { "value": "no_symptom", "text":"No symptom"},
+    ],
 };
 
 
@@ -103,6 +106,12 @@ function closeAndOpenNext(id) {
 function showAllSymptoms() {
     openedFromRecord = true;
     showSymptoms("region1");
+}
+
+// Method which saves the response that no symptom has been recorded.
+function recordNoSymptoms() {
+    symptomsReported["symptoms"].push("no_symptom");
+    save();
 }
 
 function save() {
@@ -178,13 +187,13 @@ function safeIntConvert(strval, def=0) {
 function showCheckmark() {
     // Show the checkmark for the user
     const checkmark = document.getElementById("checkmark");
-    checkmark.style.display = "inline";
-    checkmark.classList.add("fade-out");
+    checkmark.style.display = "flex";
+    checkmark.classList.add("fade-out-fireworks");
     // Perform haptic vibration to let the user know we are done.
     vibrate(500);
     checkmark.addEventListener("animationend", ()=>{
         checkmark.style.display = "none";
-        checkmark.classList.remove("fade-out");
+        checkmark.classList.remove("fade-out-fireworks");
         // Make to show all the selector overlays again.
         showSelectors();
     })

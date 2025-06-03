@@ -7,6 +7,18 @@
   }
 }
 
+@keyframes fade-out-fireworks {
+   0% {
+    opacity: 1;
+   }
+   80% {
+     opacity: 1;
+   }
+  100% {
+    opacity: 0;
+  }
+}
+
 @keyframes fade-in {
  0% {
    opacity: 0;
@@ -38,10 +50,23 @@
   position: absolute;
   top:35%;
   z-index: 10;
+  background-color: white;
+  border: 2px solid #E4BC58;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2.5em;
+  padding: 3em;
+  font-size: 1.5em;
+  display: flex;
+  flex-direction: column;
 }
 
 .fade-out {
   animation: fade-out 0.5s linear forwards;
+}
+
+.fade-out-fireworks {
+  animation: fade-out-fireworks 2s linear forwards;
 }
 
 .fade-in {
@@ -124,6 +149,28 @@
   vertical-align: middle;
   width: 100%;
 }
+
+.noButton {
+  margin: 2em 0em 0em 2em;
+  background: #FF6F61;
+  border: 1px solid #FF6F61;
+  border-radius: 0.5em;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 2em;
+  font-weight: bold;
+  line-height: 16px;
+  padding: 1.0em;
+  text-align: center;
+  text-rendering: geometricprecision;
+  touch-action: manipulation;
+  vertical-align: middle;
+  width: 100%;
+}
+
 
 .recordButton:hover,
 .recordButton:active {
