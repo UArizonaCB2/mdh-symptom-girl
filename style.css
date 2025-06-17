@@ -26,7 +26,7 @@
 .container {
   width: 85%;
   height: 100%;
-  background-image: url("img/avatar1.png");
+  background-image: url("img/avatar1.jpg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -36,13 +36,49 @@
   display: none;
 }
 
+.avatarcontainer {
+  background-color: white;
+  border: 2px solid #E4BC58;
+  border-radius: 2.5em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  position: absolute;
+  bottom: 0;
+  height: 60%;
+  width: 50%;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3);
+  padding:3em;
+}
+
+.avatarimg {
+  object-fit: cover;
+  height:17%;
+  width: 34%;
+  position: center;
+  object-position: 100% 0%;
+  margin-right: 5%;
+  margin-left: 5%;
+  border-style: double;
+  border-radius: 20px;
+  border-color: black;
+  
+}
+
+.avatarbutton {
+  position:absolute;
+  left:90%;
+}
+
 .selector {
   background-color: #FADADD;
   width: 90%;
   height: 24%;
   position: absolute;
   opacity: 40%;
-  left: 5%
+  left: 5%;
 }
 
 .button {
@@ -133,3 +169,40 @@
   font-size: 2em;
 }
 
+.exitButton {
+  margin-top: 10px;
+  background: #FF6F61;
+  border: 1px solid #FF6F61;
+  border-radius: 0.5em;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+  font-size: 2.5em;
+  font-weight: 800;
+  line-height: 16px;
+  min-height: 40px;
+  outline: 0;
+  padding: 1.0em;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.exitButton:hover,
+.exitButton:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: #FF6F61;
+}
+
+.exitButton:active {
+  opacity: .5;
+}

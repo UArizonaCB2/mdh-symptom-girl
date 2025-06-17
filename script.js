@@ -88,7 +88,14 @@ function showSymptoms(id) {
     } else {
         innerHTML += "<div id=\"save\"><input type=\"button\" value=\"Save\" class=\"recordButton\" onclick=\"closeAndSave('scontainer');\"></input></div>"
     }
+    innerHTML += "<div id=\"close\"><input type=\"button\" value=\"Cancel\" class=\"exitButton\" onclick=\"exit();\"></input></div>"
+
     scontainer.innerHTML = innerHTML;
+}
+
+function exit() {
+    document.getElementById("scontainer").style = "display: none";
+    resetStates();
 }
 
 function closeAndOpenNext(id) {
@@ -183,4 +190,17 @@ function closeAndSave(id) {
     close(id);
     // Save the symptoms.
     save();
+}
+
+function setAvatar(num) {
+    document.getElementById("container").style.backgroundImage = 'url("img/avatar' + num + '.jpg")';
+    closeAvatarSelector();
+}
+
+function closeAvatarSelector() {
+    document.getElementById("avatarcontainer").style.display = "none";
+}
+
+function showAvatarSelector() {
+    document.getElementById("avatarcontainer").style.display = "flex";
 }
