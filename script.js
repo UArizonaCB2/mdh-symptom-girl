@@ -44,77 +44,59 @@ const symptomMap = {
 
 
 // This array holds the values of the active symptoms recorded.
-let activeSymptoms = [];
 let currentRegion = "none";
-let scontainerVisible = false;
 let openedFromRecord = false;
-let anythingClicked = false;
 let criticalSwitch = false;
-let disclaimerShown = false;
+
+// Stores the final symptom region argument (eg: region4).
+// This is used to change the text in the next/save button when cycling through all the symptoms.
+const finalRegion = "region4";
 
 let symptomsReported = {"timestamp": null, "symptoms": []}
 
+function resetStates() {
+    currentRegion = "none";
+    openedFromRecord = false;
+    criticalSwitch = false;
+    symptomsReported = {"timestamp": null, "symptoms": []};
+}
+
 function showSymptoms(id) {
-    if (currentRegion != "none" || disclaimerShown) {
-        // Don't open a new region if one is already visible
-        return;
-    }    
-        anythingClicked = true;
-        scontainerVisible = true;
-        currentRegion = id;
-        console.log(currentRegion);
+    // Check and see if the symptom container is already open. If it is then don't do anything.
+    if (document.getElementById("scontainer").style.display != "none") {
+        return
+    }
 
+    currentRegion = id;
 
-        const temp = document.getElementById('disclaimer');
-        if (!(id in symptomMap)) {
-            // Simulate closing by clicking on something random
-            close(temp);
-            openedFromRecord = false;
-            showDisclaimer();
-            return;
-        }
-        const region = symptomMap[id];
-        const holder = document.getElementById('scontainer');
-        scontainer.style = "display:inline";
-        let innerHTML = "";
-        for (const spair of region) {
-            const val = spair['value'];
-            const text = spair['text'];
-            const crit = spair['critical'];
-           
-            //innerHTML += "<div class='symptomrow' onClick=\"symptomclicked('" + val + "');\"><div id='" + val + "' class='checkbox'></div><div class='label'>" + text + "</div></div>"
-            if (symptomsReported["symptoms"].includes(val)) {
-                innerHTML += "<div class='symptomrow' onClick=\"symptomclicked('" + val + "');\"><div id='" + val + "' class='checkbox-active'></div><div class='label'>" + text + "</div></div>"
-            } else {
-                innerHTML += "<div class='symptomrow' onClick=\"symptomclicked('" + val + "');\"><div id='" + val + "' class='checkbox'></div><div class='label'>" + text + "</div></div>"
-            }
-        }
-        // Add in appropriate buttons
-        if (openedFromRecord) {
-            if (id == "region4") {
-                innerHTML += "<div id=\"next\"><input type=\"button\" value=\"Save\" class=\"recordButton\" onclick=\"closeAndOpenNext('" + id + "')\"></input></div>"
-            } else {
-                innerHTML += "<div id=\"next\"><input type=\"button\" value=\"Next\" class=\"recordButton\" onclick=\"closeAndOpenNext('" + id + "')\"></input></div>"
-            }
+    const region = symptomMap[id];
+    scontainer.style = "display:inline";
+    let innerHTML = "";
+    for (const spair of region) {
+        const val = spair['value'];
+        const text = spair['text'];
+
+        if (symptomsReported["symptoms"].includes(val)) {
+            innerHTML += "<div class='symptomrow' onClick=\"symptomclicked('" + val + "');\"><div id='" + val + "' class='checkbox-active'></div><div class='label'>" + text + "</div></div>"
         } else {
-            innerHTML += "<div id=\"save\"><input type=\"button\" value=\"Save\" class=\"recordButton\" onclick=\"closeId('disclaimer')\"></input></div>"
+            innerHTML += "<div class='symptomrow' onClick=\"symptomclicked('" + val + "');\"><div id='" + val + "' class='checkbox'></div><div class='label'>" + text + "</div></div>"
         }
-        scontainer.innerHTML = innerHTML;
-
+    }
+    // Add in appropriate buttons
+    if (openedFromRecord && id != finalRegion) {
+        innerHTML += "<div id=\"next\"><input type=\"button\" value=\"Next\" class=\"recordButton\" onclick=\"closeAndOpenNext('" + currentRegion + "')\"></input></div>"
+    } else {
+        innerHTML += "<div id=\"save\"><input type=\"button\" value=\"Save\" class=\"recordButton\" onclick=\"closeAndSave('scontainer');\"></input></div>"
+    }
+    scontainer.innerHTML = innerHTML;
 }
 
 function closeAndOpenNext(id) {
-    save();
-    close(document.getElementById('record'));
+    close('scontainer');
     showSymptoms('region' + (parseInt(id.charAt(id.length - 1))+1));
 }
 
-function submitForm(id) {
-    const formDiv = document.getElementById("symptoms" + id);
-    formDiv.style = "display:none";
-}
-
-function record() {
+function showAllSymptoms() {
     openedFromRecord = true;
     showSymptoms("region1");
 }
@@ -122,11 +104,34 @@ function record() {
 function save() {
     // TODO: Implement API calls
     symptomsReported["timestamp"] = Date.now();
-    if (symptomsReported.symptoms.length != 0) {
-        console.log(JSON.stringify(symptomsReported)); // Replace this line with API call
+    showDisclaimer();
+
+    // We will decouple all the symptoms stores in the array, and then call the API one at a time to add them.
+    let deviceItems = [];
+    for (symptom of symptomsReported["symptoms"]) {
+        const item = {
+            identifier: "symptom-"+Date.now().toString()+"-"+Math.ceil(Math.random()*10e10).toString(),
+            type: "symptom",
+            value: symptom,
+            observationDate: new Date(symptomsReported["timestamp"]),
+        }
+
+        deviceItems.push(item);
     }
-    symptomsReported['symptoms'] = [];
-    if (!openedFromRecord) showDisclaimer();
+
+    console.log(deviceItems);
+
+    // Call MDH API to ship this data off to them.
+    MyDataHelps.persistDeviceData(deviceItems).then(()=>{
+        console.log("MDH API returned successfully for storage");
+        //TODO: Show the checkmark so the user knows it was recorded.
+    }).catch(()=>{
+        console.log("Something went wrong with storage through API");
+        //TODO: Show an error asking the user to try again.
+    })
+
+    // Reset all states back to their starting states.
+    resetStates();
 }
 
 function showDisclaimer() {
@@ -134,9 +139,7 @@ function showDisclaimer() {
         let disclaimer = document.getElementById("disclaimer");
         disclaimer.style = "display:flex";
         criticalSwitch = false;
-        disclaimerShown = true;
-        return;
-    }        
+    }
 }
 
 function hideDisclaimer() {
@@ -168,50 +171,16 @@ function symptomclicked(symptomid) {
         
     } else {
         symptomsReported["symptoms"].push(symptomid);
-        console.log("Added " + symptomid + " to data");
-    }
-
-    // TODO: Add logic to add the symptomid to the `activeSymptoms` array if it does not exist. If it does then remove it. 
-}
-
-
-function close(target) {
-    const area = document.getElementById('scontainer');
-/*
-    if (scontainerVisible) {
-        // Reset for next click
-        scontainerVisible = false;
-        return; 
-    }*/
-
-    if (!area.contains(target) && currentRegion != "none") {
-        currentRegion = "none";
-        scontainer.style = "display:none";
-        save()
     }
 }
 
-function closeId(id) {
+function close(id) {
     const target = document.getElementById(id);
-    const area = document.getElementById('scontainer');
-/*
-    if (scontainerVisible) {
-        // Reset for next click
-        scontainerVisible = false;
-        return; 
-    }*/
-
-    if (!area.contains(target) && currentRegion != "none") {
-        currentRegion = "none";
-        scontainer.style = "display:none";
-        save()
-    }
+    target.style = "display:none";
 }
 
-// Event listener for closing the symptom selector
-// document.addEventListener('click', (event) => {close(event.target)});
-
-//TODO: 
-/*
-Figure out CSS variables
-*/
+function closeAndSave(id) {
+    close(id);
+    // Save the symptoms.
+    save();
+}
