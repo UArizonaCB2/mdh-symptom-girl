@@ -78,6 +78,7 @@
   border: 2px solid #E4BC58;
   border-radius: 2.5em;
   position: absolute;
+  top: 15%;
   width: 50%;
   justify-content: center;
   align-items: center;
@@ -99,6 +100,42 @@
 }
 .hide {
   display: none;
+}
+
+.avatarcontainer {
+  background-color: white;
+  border: 2px solid #E4BC58;
+  border-radius: 2.5em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  position: absolute;
+  bottom: 0;
+  height: 60%;
+  width: 50%;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3);
+  padding:3em;
+}
+
+.avatarimg {
+  object-fit: cover;
+  height:17%;
+  width: 34%;
+  position: center;
+  object-position: 100% 0%;
+  margin-right: 5%;
+  margin-left: 5%;
+  border-style: double;
+  border-radius: 20px;
+  border-color: black;
+  
+}
+
+.avatarbutton {
+  position:absolute;
+  left:90%;
 }
 
 .selector {
@@ -150,10 +187,17 @@
   width: 100%;
 }
 
+.saveExitDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 .noButton {
   margin: 2em 0em 0em 2em;
-  background: #FF6F61;
-  border: 1px solid #FF6F61;
+  background: #6D4C41;
+  border: 1px solid #6D4C41;
   border-radius: 0.5em;
   box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
   box-sizing: border-box;
@@ -210,3 +254,34 @@
   font-size: 2em;
 }
 
+.exitButton {
+  margin: 2em 0em 0em 0em;
+  background: #6D4C41;
+  border: 1px solid #6D4C41;
+  border-radius: 0.5em;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 2em;
+  font-weight: bold;
+  line-height: 16px;
+  padding: 1.0em;
+  text-align: center;
+  text-rendering: geometricprecision;
+  touch-action: manipulation;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.exitButton:hover,
+.exitButton:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: #6D4C41;
+}
+
+.exitButton:active {
+  opacity: .5;
+}

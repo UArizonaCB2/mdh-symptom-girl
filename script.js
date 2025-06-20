@@ -50,7 +50,6 @@ const symptomMap = {
 let currentRegion = "none";
 let openedFromRecord = false;
 let criticalSwitch = false;
-let disclaimerShown = false;
 
 // Stores the final symptom region argument (eg: region4).
 // This is used to change the text in the next/save button when cycling through all the symptoms.
@@ -90,12 +89,22 @@ function showSymptoms(id) {
         }
     }
     // Add in appropriate buttons
+    innerHTML += '<div id="next" class=saveExitDiv>'
     if (openedFromRecord && id != finalRegion) {
-        innerHTML += "<div id=\"next\"><input type=\"button\" value=\"Next\" class=\"recordButton\" onclick=\"closeAndOpenNext('" + currentRegion + "')\"></input></div>"
+        innerHTML += "<input type=\"button\" value=\"Next\" class=\"recordButton\" onclick=\"closeAndOpenNext('" + currentRegion + "')\"></input>"
     } else {
-        innerHTML += "<div id=\"save\"><input type=\"button\" value=\"Save\" class=\"recordButton\" onclick=\"closeAndSave('scontainer');\"></input></div>"
+        innerHTML += "<input type=\"button\" value=\"Save\" class=\"recordButton\" onclick=\"closeAndSave('scontainer');\"></input> "
     }
+    innerHTML += "<input type=\"button\" value=\"Cancel\" class=\"noButton\" onclick=\"exit();\"></input>"
+    innerHTML += "</div>"
+
     scontainer.innerHTML = innerHTML;
+}
+
+function exit() {
+    document.getElementById("scontainer").style = "display: none";
+    resetStates();
+    showSelectors();
 }
 
 function closeAndOpenNext(id) {
@@ -280,4 +289,33 @@ function closeAndSave(id) {
 
 window.addEventListener("load", ()=>{
     document.getElementById("main").style.height = window.innerHeight.toString()+"px";
+
+    // Check MDH to see if the avatar has been previously selected.
+    MyDataHelps.getParticipantInfo().then(
+    (result)=>{
+        const customFields = result.customFields;
+        let avatarid = safeIntConvert(customFields.sgAvatar);
+
+        // If avtarid is not se then we go ahead and show the Avatar selector.
+        if (avatarid < 1) {
+            showAvatarSelector();
+        }
+    });
 })
+function setAvatar(num) {
+    document.getElementById("container").style.backgroundImage = 'url("img/avatar' + num + '.jpg")';
+    MyDataHelps.persistParticipantInfo({},
+                                           {'sgAvatar':num.toString(),
+                                           }).then(()=>{
+                                               console.log("Custom fields have been updated for Avatar Id");
+                                           });
+    closeAvatarSelector();
+}
+
+function closeAvatarSelector() {
+    document.getElementById("avatarcontainer").style.display = "none";
+}
+
+function showAvatarSelector() {
+    document.getElementById("avatarcontainer").style.display = "flex";
+}

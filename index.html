@@ -15,7 +15,7 @@
             <p id="thankyou">Thank You! Your symptoms have been saved!</p>
             <p id="gotit" style="display: none;">No symptoms today! Got it!</p>
         </div>
-        <div class="container">
+        <div class="container" id="container">
             <div id="selector-container">
                 <div id="sel-1" class="selector" style="top:0%" onClick="showSymptoms('region1');"></div>
                 <div id="sel-2" class="selector" style="top:25%" onClick="showSymptoms('region2');"></div>
@@ -57,6 +57,19 @@
 			<!-- TODO: Add the done button here and style it -->
 			<!-- TODO: When this button is clicked called the `record()` method. -->
 		</div>
+		</div>
+		<div class="avatarcontainer" id="avatarcontainer" style="display: none;">
+			<img class="avatarimg" onclick="setAvatar(1)" src="img/avatar1.jpg" style="top:0%">
+			<img class="avatarimg" onclick="setAvatar(2)" src="img/avatar2.jpg" style="top:12.5%">
+			<img class="avatarimg" onclick="setAvatar(3)" src="img/avatar3.jpg" style="top:25%">
+			<img class="avatarimg" onclick="setAvatar(4)" src="img/avatar4.jpg" style="top:37.5%">
+			<img class="avatarimg" onclick="setAvatar(5)" src="img/avatar5.jpg" style="top:50%">
+			<img class="avatarimg" onclick="setAvatar(6)" src="img/avatar6.jpg" style="top:62.5%">
+			<img class="avatarimg" onclick="setAvatar(7)" src="img/avatar7.jpg" style="top:75%">
+			<img class="avatarimg" onclick="setAvatar(8)" src="img/avatar8.jpg" style="top:87.5%">
+			<div id="close"><input type="button" value="Cancel" class="exitButton" onclick="closeAvatarSelector()"></input></div>
+		</div>
+		<!--<img src="img/layers-icons-red.png" class="avatarbutton" onclick="showAvatarSelector">-->
     </div>
 </body>
 </html>
