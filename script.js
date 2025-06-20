@@ -303,7 +303,7 @@ window.addEventListener("load", ()=>{
         else {
             // The avatar is set. We will just go ahead and load this new avatar for the user.
             // Not calling set here, since I want avoid making another MDH call.
-            document.getElementById("container").style.backgroundImage = 'url("img/avatar' + num + '.jpg")';
+            document.getElementById("container").style.backgroundImage = 'url("img/avatar' + avatarid + '.jpg")';
         }
     });
 })
