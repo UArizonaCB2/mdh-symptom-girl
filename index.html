@@ -15,11 +15,18 @@
             <p id="thankyou">Thank You! Your symptoms have been saved!</p>
             <p id="gotit" style="display: none;">No symptoms today! Got it!</p>
         </div>
+
+        <!-- Avatar selection icon -->
+        <div id="avatar-icon" class="avatar-icon">
+            <img src="img/user.svg", width="64px" onclick="showAvatarSelector();">
+        </div>
+
+        <!-- Main container that contains the avatar and the overlays -->
         <div class="container" id="container">
             <div id="selector-container">
                 <div id="sel-1" class="selector" style="top:0%" onClick="showSymptoms('region1');"></div>
-                <div id="sel-2" class="selector" style="top:25.333%" onClick="showSymptoms('region2');"></div>
-                <div id="sel-3" class="selector" style="top:50.666%" onClick="showSymptoms('region3');"></div>
+                <div id="sel-2" class="selector" style="top:25%" onClick="showSymptoms('region2');"></div>
+                <div id="sel-3" class="selector" style="top:50%" onClick="showSymptoms('region3');"></div>
                 <div id="sel-4" class="selector" style="top:75%" onClick="showSymptoms('region4');"></div>
             </div>
         </div>
@@ -49,7 +56,9 @@
 					<li>Painful contractions</li>
 					<li>Persistent low back pain AND contractions</li>
 					<li>Fever</li></ul>
-			    <p>To read more about signs and symptoms to look for in pregnancy, click here.</p>
+			    <p>
+                    To read more about signs and symptoms to look for in pregnancy, <a href="https://www.cdc.gov/hearher/maternal-warning-signs/index.html">click here</a>.
+                </p>
                 <p>In the case of an emergency, call 911.</p>
 			    <input type="button" class="recordButton" style="font-size: 1.5em;" value="I Understand" id="disclaimerButton" onclick="hideDisclaimer()">
             </div>
