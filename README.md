@@ -4,7 +4,7 @@ A pregnancy symptom tracking application integrated with MyDataHelps for healthc
 
 ## Demo
 
-https://github.com/user-attachments/assets/recording.MP4
+[Watch Demo Video](assets/recording.MP4)
 
 ## Screenshots
 
@@ -91,11 +91,3 @@ For more information, visit the [CDC's Maternal Warning Signs](https://www.cdc.g
 ## Security
 
 The application implements required security headers for MDH and Amplify deployment, configured in `customHttp.yml`.
-
-## License
-
-[Your License Here]
-
-## Support
-
-For issues or questions, please contact [Your Contact Information].
