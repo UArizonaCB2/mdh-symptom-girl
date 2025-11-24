@@ -44,8 +44,6 @@ const symptomMap = {
     ],
 };
 
-
-
 // This array holds the values of the active symptoms recorded.
 let currentRegion = "none";
 let openedFromRecord = false;
